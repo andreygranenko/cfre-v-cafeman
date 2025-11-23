@@ -647,7 +647,7 @@
 
                     <div class="info-row">
                         <span>📍</span>
-                        <p>Marijas iela 2, Centra rajons, Rīga</p>
+                        <p data-key="contact-address">Marijas iela 2, Centra rajons, Rīga</p>
                     </div>
 
                     <div class="info-row">
@@ -662,7 +662,7 @@
 
                     <div class="info-row">
                         <span>⏰</span>
-                        <p>Pirm-Piekt: 08:00 - 20:00 <br> Sest-Svēt: 08:00 - 20:00</p>
+                        <p data-key="contact-hours">Pirm-Piekt: 08:00 - 20:00 <br> Sest-Svēt: 08:00 - 20:00</p>
                     </div>
 
                     <br>
@@ -716,7 +716,7 @@
                 "about-title": "Par Mums",
                 "about-text": "Mēs esam vairāk nekā tikai kafejnīca. Mēs esam vieta, kur laiks mazliet apstājas. Mūsu filozofija ir vienkārša – kvalitatīvas pupiņas, meistarīgs pagatavošanas process un atmosfēra, kas ļauj jums justies kā mājās. Nāciet un izbaudiet mirkli miera pilsētas steigā.",
 
-                "contact-head": "Atrašanās vieta", "btn-call": "Zvanīt Mums"
+                "contact-head": "Atrašanās vieta", "contact-address": "Marijas iela 2, Centra rajons, Rīga", "contact-hours": "Pirm-Piekt: 08:00 - 20:00 | Sest-Svēt: 08:00 - 20:00", "btn-call": "Zvanīt Mums"
             },
             "en": {
                 "seo-title": "Kofeman - Coffee & Soul",
@@ -733,7 +733,7 @@
                 "about-title": "About Us",
                 "about-text": "We are more than just a coffee shop. We are a place where time slows down. Our philosophy is simple – quality beans, expert brewing, and an atmosphere that makes you feel at home. Come and enjoy a moment of peace in the city rush.",
 
-                "contact-head": "Find Us", "btn-call": "Call Us"
+                "contact-head": "Find Us", "contact-address": "Marijas Street 2, Central District, Riga", "contact-hours": "Mon-Fri: 08:00 - 20:00 | Sat-Sun: 08:00 - 20:00", "btn-call": "Call Us"
             },
             "ru": {
                 "seo-title": "Kofeman - Кофе и Душа",
@@ -750,7 +750,7 @@
                 "about-title": "О Нас",
                 "about-text": "Мы больше, чем просто кофейня. Мы — место, где время немного замедляется. Наша философия проста — качественные зерна, мастерское приготовление и атмосфера, в которой вы чувствуете себя как дома. Приходите и насладитесь моментом покоя в городской суете.",
 
-                "contact-head": "Найти нас", "btn-call": "Позвонить"
+                "contact-head": "Найти нас", "contact-address": "Улица Мариас 2, Центральный район, Рига", "contact-hours": "Пн-Пт: 08:00 - 20:00 | Сб-Вс: 08:00 - 20:00", "btn-call": "Позвонить"
             }
         };
 
@@ -768,7 +768,14 @@
                 const elements = document.querySelectorAll('[data-key]');
                 elements.forEach(el => {
                     const key = el.dataset.key;
-                    if (translations[lang][key]) el.textContent = translations[lang][key];
+                    if (translations[lang][key]) {
+                        // Use innerHTML for contact-hours to preserve <br> tag
+                        if (key === 'contact-hours') {
+                            el.innerHTML = translations[lang][key].replace('|', '<br>');
+                        } else {
+                            el.textContent = translations[lang][key];
+                        }
+                    }
                 });
 
                 // Update HTML lang attribute
